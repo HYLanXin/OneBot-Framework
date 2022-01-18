@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using OneBot.CommandRoute.Events;
 using OneBot.CommandRoute.Models;
+using Sora.EventArgs.SoraEvent;
 
 namespace OneBot.CommandRoute.Services
 {
@@ -26,7 +27,7 @@ namespace OneBot.CommandRoute.Services
         /// <param name="sender"></param>
         /// <param name="oneBotContext"></param>
         /// <returns></returns>
-        public ValueTask HandleEvent(object sender, OneBotContext oneBotContext);
+        public ValueTask HandleEvent<T>(object sender, OneBotContext<T> oneBotContext) where T : BaseSoraEventArgs;
 
 
         /// <summary>
@@ -35,6 +36,7 @@ namespace OneBot.CommandRoute.Services
         /// <param name="sender"></param>
         /// <param name="oneBotContext"></param>
         /// <param name="exception"></param>
-        public ValueTask EventOnException(object sender, OneBotContext oneBotContext, Exception exception);
+        public ValueTask EventOnException<T>(object sender, OneBotContext<T> oneBotContext, Exception exception)
+            where T : BaseSoraEventArgs;
     }
 }

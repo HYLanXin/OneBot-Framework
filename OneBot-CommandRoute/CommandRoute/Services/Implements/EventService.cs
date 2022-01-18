@@ -82,18 +82,16 @@ public class EventService : IEventService
     /// <param name="sender"></param>
     /// <param name="e"></param>
     /// <returns></returns>
-    private ValueTask OnGeneralEvent(object sender, BaseSoraEventArgs e)
+    private ValueTask OnGeneralEvent<T>(object sender, T e) where T : BaseSoraEventArgs
     {
         using (var scope = this._scopeFactory.CreateScope())
         {
-            var ctx = new OneBotContextDefault();
-            ctx.SetSoraEventArgs(e);
-            ctx.SoraServiceScope(scope);
+            var ctx = new OneBotContextDefault<T>(e, scope);
 
             var middleware = scope.ServiceProvider.GetServices<IOneBotMiddleware>().ToImmutableArray();
             var count = middleware.Count();
 
-            OneBotRequestDelegate entry = context => _commandService.HandleEvent(sender, context);
+            OneBotRequestDelegate<T> entry = context => _commandService.HandleEvent(sender, context);
 
             for (int i = count - 1; i >= 0; i--)
             {

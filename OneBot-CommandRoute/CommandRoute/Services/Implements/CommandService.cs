@@ -57,7 +57,7 @@ namespace OneBot.CommandRoute.Services.Implements
             _matchingRootNode = new MatchingNode(routeConfiguration) { IsRoot = true };
         }
 
-        public ValueTask HandleEvent(object sender, OneBotContext oneBotContext)
+        public ValueTask HandleEvent<T>(object sender, OneBotContext<T> oneBotContext) where T : BaseSoraEventArgs
         {
             var eventArgs = oneBotContext.SoraEventArgs;
 
@@ -65,16 +65,16 @@ namespace OneBot.CommandRoute.Services.Implements
             {
                 if (groupMessageEventArgs.IsSelfMessage)
                 {
-                    return EventOnSelfMessage(sender, oneBotContext, groupMessageEventArgs);
+                    return EventOnSelfMessage(sender, (oneBotContext as OneBotContext<GroupMessageEventArgs>)!);
                 }
                 else
                 {
-                    return EventOnGroupMessage(sender, oneBotContext, groupMessageEventArgs);
+                    return EventOnGroupMessage(sender, (oneBotContext as OneBotContext<GroupMessageEventArgs>)!);
                 }
             }
             else if (eventArgs is PrivateMessageEventArgs privateMessageEventArgs)
             {
-                return EventOnPrivateMessage(sender, oneBotContext, privateMessageEventArgs);
+                return EventOnPrivateMessage(sender, (oneBotContext as OneBotContext<PrivateMessageEventArgs>)!);
             }
             else
             {
@@ -89,14 +89,13 @@ namespace OneBot.CommandRoute.Services.Implements
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="oneBotContext"></param>
-        /// <param name="e"></param>
         /// <returns></returns>
-        private ValueTask EventOnSelfMessage(object sender, OneBotContext oneBotContext, GroupMessageEventArgs e)
+        private ValueTask EventOnSelfMessage(object sender, OneBotContext<GroupMessageEventArgs> oneBotContext)
         {     
             Exception? exception = null;
             try
             {
-                Event.FireSelfMessage(oneBotContext, e);
+                Event.FireSelfMessage(oneBotContext);
             }
             catch (Exception e1)
             {
@@ -116,12 +115,13 @@ namespace OneBot.CommandRoute.Services.Implements
         /// <param name="sender"></param>
         /// <param name="oneBotContext"></param>
         /// <param name="exception"></param>
-        public ValueTask EventOnException(object sender, OneBotContext oneBotContext, Exception exception)
+        public ValueTask EventOnException<T>(object sender, OneBotContext<T> oneBotContext, Exception exception)
+            where T : BaseSoraEventArgs
         {
             var e = oneBotContext.SoraEventArgs;
             try
             {
-                if (!Event.FireException(oneBotContext, e, exception))
+                if (!Event.FireException(oneBotContext, exception))
                 {
                     _logger.LogError(
                         $"{exception.Message} : \n" +
@@ -145,7 +145,8 @@ namespace OneBot.CommandRoute.Services.Implements
         /// <param name="oneBotContext"></param>
         /// <param name="e"></param>
         /// <returns></returns>
-        private ValueTask OnGeneralEvent(object sender, OneBotContext oneBotContext, BaseSoraEventArgs e)
+        private ValueTask OnGeneralEvent<T>(object sender, OneBotContext<T> oneBotContext, BaseSoraEventArgs e)
+            where T : BaseSoraEventArgs
         {
             Exception? exception = null;
             try
@@ -176,7 +177,8 @@ namespace OneBot.CommandRoute.Services.Implements
         /// <param name="oneBotContext"></param>
         /// <param name="e"></param>
         /// <returns></returns>
-        private ValueTask EventOnPrivateMessage(object sender, OneBotContext oneBotContext, PrivateMessageEventArgs e)
+        private ValueTask EventOnPrivateMessage(object sender, OneBotContext<PrivateMessageEventArgs> oneBotContext,
+            PrivateMessageEventArgs e)
         {
             Exception? exception = null;
             try
@@ -206,7 +208,8 @@ namespace OneBot.CommandRoute.Services.Implements
         /// <param name="oneBotContext"></param>
         /// <param name="e"></param>
         /// <returns></returns>
-        private ValueTask EventOnGroupMessage(object sender, OneBotContext oneBotContext, GroupMessageEventArgs e)
+        private ValueTask EventOnGroupMessage(object sender, OneBotContext<GroupMessageEventArgs> oneBotContext,
+            GroupMessageEventArgs e)
         {
             Exception? exception = null;
             try

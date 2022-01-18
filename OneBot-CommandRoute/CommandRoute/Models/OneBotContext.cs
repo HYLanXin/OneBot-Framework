@@ -4,12 +4,12 @@ using Sora.EventArgs.SoraEvent;
 
 namespace OneBot.CommandRoute.Models;
 
-public abstract class OneBotContext
+public abstract class OneBotContext<T> where T : BaseSoraEventArgs
 {
     /// <summary>
     /// Sora 基本事件参数
     /// </summary>
-    public abstract BaseSoraEventArgs SoraEventArgs { get; protected set; }
+    public abstract T SoraEventArgs { get; protected set; }
 
     /// <summary>
     /// IOC Service Scope

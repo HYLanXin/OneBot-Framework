@@ -76,95 +76,97 @@ namespace OneBot.CommandRoute.Events
         /// <summary>其他客户端在线状态变更事件</summary>
         public event EventAsyncCallBackHandler<EssenceChangeEventArgs>? OnEssenceChange;
 
-        public delegate int EventAsyncCallBackHandler<in TEventArgs>(OneBotContext scope, TEventArgs eventArgs)
-            where TEventArgs : EventArgs;
+        public delegate int EventAsyncCallBackHandler<TEventArgs>(OneBotContext<TEventArgs> context,
+            TEventArgs eventArgs)
+            where TEventArgs : BaseSoraEventArgs;
 
         /// <summary>
         /// 分发事件
         /// </summary>
-        /// <param name="scope"></param>
-        /// <param name="eventArgs"></param>
-        internal void Fire(OneBotContext scope, BaseSoraEventArgs eventArgs)
+        /// <param name="context"></param>
+        internal void Fire<T>(OneBotContext<T> context) where T : BaseSoraEventArgs
         {
-            if (eventArgs is ConnectEventArgs connectEventArgs)
+            var eventArgs = context.SoraEventArgs;
+
+            if (eventArgs is ConnectEventArgs)
             {
-                Fire(scope, connectEventArgs, OnClientConnect);
+                Fire((context as OneBotContext<ConnectEventArgs>)!, OnClientConnect);
             }
-            else if (eventArgs is GroupMessageEventArgs groupMessageEventArgs)
+            else if (eventArgs is GroupMessageEventArgs)
             {
-                Fire(scope, groupMessageEventArgs, OnGroupMessage);
+                Fire((context as OneBotContext<GroupMessageEventArgs>)!, OnGroupMessage);
             }
-            else if (eventArgs is PrivateMessageEventArgs privateMessageEventArgs)
+            else if (eventArgs is PrivateMessageEventArgs)
             {
-                Fire(scope, privateMessageEventArgs, OnPrivateMessage);
+                Fire((context as OneBotContext<PrivateMessageEventArgs>)!, OnPrivateMessage);
             }
-            else if (eventArgs is AddGroupRequestEventArgs addGroupRequestEventArgs)
+            else if (eventArgs is AddGroupRequestEventArgs)
             {
-                Fire(scope, addGroupRequestEventArgs, OnGroupRequest);
+                Fire((context as OneBotContext<AddGroupRequestEventArgs>)!, OnGroupRequest);
             }
-            else if (eventArgs is FriendRequestEventArgs friendRequestEventArgs)
+            else if (eventArgs is FriendRequestEventArgs)
             {
-                Fire(scope, friendRequestEventArgs, OnFriendRequest);
+                Fire((context as OneBotContext<FriendRequestEventArgs>)!, OnFriendRequest);
             }
-            else if (eventArgs is FileUploadEventArgs fileUploadEventArgs)
+            else if (eventArgs is FileUploadEventArgs)
             {
-                Fire(scope, fileUploadEventArgs, OnFileUpload);
+                Fire((context as OneBotContext<FileUploadEventArgs>)!, OnFileUpload);
             }
-            else if (eventArgs is GroupAdminChangeEventArgs groupAdminChangeEventArgs)
+            else if (eventArgs is GroupAdminChangeEventArgs)
             {
-                Fire(scope, groupAdminChangeEventArgs, OnGroupAdminChange);
+                Fire((context as OneBotContext<GroupAdminChangeEventArgs>)!, OnGroupAdminChange);
             }
-            else if (eventArgs is GroupMemberChangeEventArgs groupMemberChangeEventArgs)
+            else if (eventArgs is GroupMemberChangeEventArgs)
             {
-                Fire(scope, groupMemberChangeEventArgs, OnGroupMemberChange);
+                Fire((context as OneBotContext<GroupMemberChangeEventArgs>)!, OnGroupMemberChange);
             }
-            else if (eventArgs is GroupMuteEventArgs groupMuteEventArgs)
+            else if (eventArgs is GroupMuteEventArgs)
             {
-                Fire(scope, groupMuteEventArgs, OnGroupMemberMute);
+                Fire((context as OneBotContext<GroupMuteEventArgs>)!, OnGroupMemberMute);
             }
-            else if (eventArgs is FriendAddEventArgs friendAddEventArgs)
+            else if (eventArgs is FriendAddEventArgs)
             {
-                Fire(scope, friendAddEventArgs, OnFriendAdd);
+                Fire((context as OneBotContext<FriendAddEventArgs>)!, OnFriendAdd);
             }
-            else if (eventArgs is GroupRecallEventArgs groupRecallEventArgs)
+            else if (eventArgs is GroupRecallEventArgs)
             {
-                Fire(scope, groupRecallEventArgs, OnGroupRecall);
+                Fire((context as OneBotContext<GroupRecallEventArgs>)!, OnGroupRecall);
             }
-            else if (eventArgs is FriendRecallEventArgs friendRecallEventArgs)
+            else if (eventArgs is FriendRecallEventArgs)
             {
-                Fire(scope, friendRecallEventArgs, OnFriendRecall);
+                Fire((context as OneBotContext<FriendRecallEventArgs>)!, OnFriendRecall);
             }
-            else if (eventArgs is GroupCardUpdateEventArgs groupCardUpdateEventArgs)
+            else if (eventArgs is GroupCardUpdateEventArgs)
             {
-                Fire(scope, groupCardUpdateEventArgs, OnGroupCardUpdate);
+                Fire((context as OneBotContext<GroupCardUpdateEventArgs>)!, OnGroupCardUpdate);
             }
-            else if (eventArgs is GroupPokeEventArgs groupPokeEventArgs)
+            else if (eventArgs is GroupPokeEventArgs)
             {
-                Fire(scope, groupPokeEventArgs, OnGroupPoke);
+                Fire((context as OneBotContext<GroupPokeEventArgs>)!, OnGroupPoke);
             }
-            else if (eventArgs is LuckyKingEventArgs luckyKingEventArgs)
+            else if (eventArgs is LuckyKingEventArgs)
             {
-                Fire(scope, luckyKingEventArgs, OnLuckyKingEvent);
+                Fire((context as OneBotContext<LuckyKingEventArgs>)!, OnLuckyKingEvent);
             }
-            else if (eventArgs is HonorEventArgs honorEventArgs)
+            else if (eventArgs is HonorEventArgs)
             {
-                Fire(scope, honorEventArgs, OnHonorEvent);
+                Fire((context as OneBotContext<HonorEventArgs>)!, OnHonorEvent);
             }
-            else if (eventArgs is TitleUpdateEventArgs titleUpdateEventArgs)
+            else if (eventArgs is TitleUpdateEventArgs)
             {
-                Fire(scope, titleUpdateEventArgs, OnTitleUpdate);
+                Fire((context as OneBotContext<TitleUpdateEventArgs>)!, OnTitleUpdate);
             }
-            else if (eventArgs is OfflineFileEventArgs offlineFileEventArgs)
+            else if (eventArgs is OfflineFileEventArgs)
             {
-                Fire(scope, offlineFileEventArgs, OnOfflineFileEvent);
+                Fire((context as OneBotContext<OfflineFileEventArgs>)!, OnOfflineFileEvent);
             }
-            else if (eventArgs is ClientStatusChangeEventArgs clientStatusChangeEventArgs)
+            else if (eventArgs is ClientStatusChangeEventArgs)
             {
-                Fire(scope, clientStatusChangeEventArgs, OnClientStatusChangeEvent);
+                Fire((context as OneBotContext<ClientStatusChangeEventArgs>)!, OnClientStatusChangeEvent);
             }
-            else if (eventArgs is EssenceChangeEventArgs essenceChangeEventArgs)
+            else if (eventArgs is EssenceChangeEventArgs)
             {
-                Fire(scope, essenceChangeEventArgs, OnEssenceChange);
+                Fire((context as OneBotContext<EssenceChangeEventArgs>)!, OnEssenceChange);
             }
             else
             {
@@ -176,19 +178,20 @@ namespace OneBot.CommandRoute.Events
         /// 触发事件
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="scope"></param>
-        /// <param name="eventArgs"></param>
+        /// <param name="context"></param>
         /// <param name="eventAsyncCallBackHandler"></param>
         /// <returns></returns>
-        internal int Fire<T>(OneBotContext scope, T eventArgs, EventAsyncCallBackHandler<T>? eventAsyncCallBackHandler)
+        internal int Fire<T>(OneBotContext<T> context, EventAsyncCallBackHandler<T>? eventAsyncCallBackHandler)
             where T : BaseSoraEventArgs
         {
             Delegate[]? listeners = eventAsyncCallBackHandler?.GetInvocationList();
             if (listeners == null) return 0;
 
+            var eventArgs = context.SoraEventArgs;
+            
             for (int counter = listeners.Length - 1; counter >= 0; counter--)
             {
-                int ret = ((EventAsyncCallBackHandler<T>)(listeners[counter]))(scope, (T)eventArgs);
+                int ret = ((EventAsyncCallBackHandler<T>)(listeners[counter]))(context, eventArgs);
                 if (ret != 0) return ret;
             }
 
@@ -199,22 +202,20 @@ namespace OneBot.CommandRoute.Events
         /// 分发接收到私聊消息后处理指令前事件
         /// </summary>
         /// <param name="scope"></param>
-        /// <param name="privateMessageEventArgs"></param>
         /// <returns></returns>
-        internal int FirePrivateMessageReceived(OneBotContext scope, PrivateMessageEventArgs privateMessageEventArgs)
+        internal int FirePrivateMessageReceived(OneBotContext<PrivateMessageEventArgs> scope)
         {
-            return Fire(scope, privateMessageEventArgs, OnPrivateMessageReceived);
+            return Fire(scope, OnPrivateMessageReceived);
         }
 
         /// <summary>
         /// 分发接收到群聊消息后处理指令前事件
         /// </summary>
-        /// <param name="scope"></param>
-        /// <param name="groupMessageEventArgs"></param>
+        /// <param name="context"></param>
         /// <returns></returns>
-        internal int FireGroupMessageReceived(OneBotContext scope, GroupMessageEventArgs groupMessageEventArgs)
+        internal int FireGroupMessageReceived(OneBotContext<GroupMessageEventArgs> context)
         {
-            return Fire(scope, groupMessageEventArgs, OnGroupMessageReceived);
+            return Fire(context, OnGroupMessageReceived);
         }
 
         /// <summary>
@@ -222,19 +223,18 @@ namespace OneBot.CommandRoute.Events
         /// </summary>
         public event ExceptionDelegate? OnException;
 
-        public delegate void ExceptionDelegate(OneBotContext scope, BaseSoraEventArgs e, Exception exception);
+        public delegate void ExceptionDelegate(OneBotContext<BaseSoraEventArgs> scope, Exception exception);
 
         /// <summary>
         /// 分发异常
         /// </summary>
         /// <param name="scope"></param>
-        /// <param name="e"></param>
         /// <param name="exception"></param>
         /// <returns></returns>
-        internal bool FireException(OneBotContext scope, BaseSoraEventArgs e, Exception exception)
+        internal bool FireException(OneBotContext<BaseSoraEventArgs> scope, Exception exception)
         {
             if (OnException == null) return false;
-            OnException?.Invoke(scope, e, exception);
+            OnException?.Invoke(scope, exception);
             return true;
         }
 
@@ -242,10 +242,9 @@ namespace OneBot.CommandRoute.Events
         /// 分发登录账号发送消息事件
         /// </summary>
         /// <param name="scope"></param>
-        /// <param name="eventArgs"></param>
-        internal void FireSelfMessage(OneBotContext scope, GroupMessageEventArgs eventArgs)
+        internal void FireSelfMessage(OneBotContext<GroupMessageEventArgs> scope)
         {
-            Fire(scope, eventArgs, OnSelfMessage);
+            Fire(scope, OnSelfMessage);
         }
     }
 }

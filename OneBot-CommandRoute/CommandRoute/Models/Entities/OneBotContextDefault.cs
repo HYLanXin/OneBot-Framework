@@ -5,17 +5,17 @@ using Sora.EventArgs.SoraEvent;
 
 namespace OneBot.CommandRoute.Models.Entities;
 
-public class OneBotContextDefault : OneBotContext
+public class OneBotContextDefault<T> : OneBotContext<T> where T : BaseSoraEventArgs
 {
     /// <summary>
     /// Sora 基本事件参数
     /// </summary>
-    public override BaseSoraEventArgs SoraEventArgs { get; protected set; } = null!;
+    public sealed override T SoraEventArgs { get; protected set; }
 
     /// <summary>
     /// IOC Service Scope
     /// </summary>
-    public override IServiceScope ServiceScope { get; protected set; } = null!;
+    public sealed override IServiceScope ServiceScope { get; protected set; }
 
     /// <summary>
     /// 上下文传递的内容
@@ -24,13 +24,9 @@ public class OneBotContextDefault : OneBotContext
         new ConcurrentDictionary<object, object?>();
 
 
-    public void SetSoraEventArgs(BaseSoraEventArgs e)
+    public OneBotContextDefault(T e, IServiceScope scope)
     {
         SoraEventArgs = e;
-    }
-
-    public void SoraServiceScope(IServiceScope scope)
-    {
         ServiceScope = scope;
     }
 }
