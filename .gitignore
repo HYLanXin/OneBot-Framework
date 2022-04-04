@@ -3,3 +3,7 @@
 [Pp]ackages/
 *.DotSettings.user
 .idea
+/XinBotDBEntity/obj
+/XinBotDBEntity/bin/Debug/net6.0
+/XinBot.Common/bin/Debug/net6.0
+/XinBot.Common/obj

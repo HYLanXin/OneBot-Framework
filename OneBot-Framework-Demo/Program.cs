@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using OneBot.CommandRoute.Mixin;
@@ -5,6 +7,8 @@ using OneBot.CommandRoute.Models.VO;
 using OneBot.CommandRoute.Services;
 using OneBot.FrameworkDemo.Middleware;
 using OneBot.FrameworkDemo.Modules;
+using XinBot.PublicCommon;
+using XinBotDBEntity;
 
 namespace OneBot.FrameworkDemo;
 
@@ -26,6 +30,9 @@ public class Program
             // 设置 OneBot 配置
             services.Configure<CQHttpServerConfigModel>(configuration.GetSection("CQHttpConfig"));
             services.ConfigureOneBot();
+            services.AddDbContext<BotDbEntity>(
+            options => options.UseSqlServer(configuration.GetConnectionString("BotConnection")));
+            //options => options.UseSqlServer("Data Source=.;Initial Catalog=LXBOT;Integrated Security=True"));
 
             // 添加中间件
             // 单例模式或原型模式都可以，问题不大。
