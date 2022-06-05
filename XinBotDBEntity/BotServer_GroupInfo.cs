@@ -25,21 +25,6 @@ namespace XinBotDBEntity
         [Required, DisplayName("到期时间")]
         public DateTime EndTime { get; set; } = DateTime.MaxValue;
 
-        [Required, DisplayName("是否删除")]
-        public bool IsDeleted { get; set; } = false;
-
-        [Required, DisplayName("创建时间")]
-        public DateTime CreatedTime { get; set; } = DateTime.Now;
-
-        [Required, DisplayName("创建人")]
-        public long Creater { get; set; } = 943289922;
-
-        [Required, DisplayName("修改时间")]
-        public DateTime ModifiedTime { get; set; } = DateTime.Now;
-
-        [Required, DisplayName("修改人")]
-        public long Modifier { get; set; } = 943289922;
-
         public List<BotServer_GroupFunList>? GroupFunList { get; set; }
     }
 }

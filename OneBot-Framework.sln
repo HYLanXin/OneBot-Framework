@@ -18,7 +18,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OneBot-UnitTest", "OneBot-U
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XinBotDBEntity", "XinBotDBEntity\XinBotDBEntity.csproj", "{D6734063-31C4-4B08-8987-E5E34A99F52B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XinBot.PublicCommon", "XinBot.Common\XinBot.PublicCommon.csproj", "{AE17D90C-8594-4179-86A8-37FD30BB6567}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XinBot.PublicCommon", "XinBot.Common\XinBot.PublicCommon.csproj", "{AE17D90C-8594-4179-86A8-37FD30BB6567}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XinBot.Models", "XinBot.Models\XinBot.Models.csproj", "{80410877-E2ED-49CB-BEA2-2F9BF0F90B14}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +52,10 @@ Global
 		{AE17D90C-8594-4179-86A8-37FD30BB6567}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE17D90C-8594-4179-86A8-37FD30BB6567}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE17D90C-8594-4179-86A8-37FD30BB6567}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80410877-E2ED-49CB-BEA2-2F9BF0F90B14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80410877-E2ED-49CB-BEA2-2F9BF0F90B14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80410877-E2ED-49CB-BEA2-2F9BF0F90B14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80410877-E2ED-49CB-BEA2-2F9BF0F90B14}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

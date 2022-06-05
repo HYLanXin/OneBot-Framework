@@ -18,9 +18,15 @@ namespace XinBotDBEntity
         [MaxLength(100), Required, DisplayName("功能名称")]
 
         public string FunName { get; set; } = "";
+        [MaxLength(100), Required, DisplayName("功能代码")]
+
+        public string FunCode { get; set; } = "";
 
         [MaxLength(100), Required, DisplayName("功能类型")]
         public string FunType { get; set; } = "梦影";
+
+        [MaxLength(100), Required, DisplayName("功能地址")]
+        public string FunUrl { get; set; } = "";
 
         [Required, DisplayName("间隔时间")]
         public int IntervalTime { get; set; } = 10;

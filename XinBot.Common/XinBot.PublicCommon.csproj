@@ -8,6 +8,11 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
+    <PackageReference Include="Sora" Version="1.0.0-rc.47" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\XinBotDBEntity\XinBotDBEntity.csproj" />
   </ItemGroup>
 
 </Project>

@@ -20,6 +20,9 @@ namespace XinBotDBEntity
         [ForeignKey("Id")]
         public BotServer_GroupInfo? GroupInfo { get; set; }
 
+        [Required, DisplayName("功能回复模板")]
+        public string ReplyTemplate { get; set; } = "";
+
         [Required, DisplayName("功能是否开启")]
         public bool IsOpen { get; set; } = true;
 
